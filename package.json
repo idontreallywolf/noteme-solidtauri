@@ -1,23 +1,27 @@
 {
-  "name": "tauri-app",
-  "version": "0.0.0",
-  "description": "",
-  "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
-    "tauri": "tauri"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "solid-js": "^1.7.8",
-    "@tauri-apps/api": "^1.4.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.2",
-    "vite": "^4.4.4",
-    "vite-plugin-solid": "^2.7.0",
-    "@tauri-apps/cli": "^1.4.0"
-  }
+    "name": "tauri-app",
+    "version": "0.0.0",
+    "description": "",
+    "scripts": {
+        "start": "vite",
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview",
+        "tauri": "tauri"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@tauri-apps/api": "^1.4.0",
+        "solid-icons": "^1.0.11",
+        "solid-js": "^1.7.8"
+    },
+    "devDependencies": {
+        "@tauri-apps/cli": "^1.4.0",
+        "autoprefixer": "^10.4.15",
+        "postcss": "^8.4.28",
+        "tailwindcss": "^3.3.3",
+        "typescript": "^5.0.2",
+        "vite": "^4.4.4",
+        "vite-plugin-solid": "^2.7.0"
+    }
 }
