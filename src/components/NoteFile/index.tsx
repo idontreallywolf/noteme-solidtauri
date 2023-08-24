@@ -7,8 +7,8 @@ interface NoteFileProps {
 function NoteFile(props: NoteFileProps) {
     return (
         <button class="file">
-            <span><FaSolidFile fill='#fff'/>
-            </span><span>{ props.title }</span>
+            <span><FaSolidFile fill='#fff'/></span>
+            <span>{ props.title }</span>
         </button>
     )
 }
