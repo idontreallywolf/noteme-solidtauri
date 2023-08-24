@@ -84,6 +84,25 @@
     -webkit-text-size-adjust: 100%;
 }
 
+::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 100%;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    transition-duration: 0.2s;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.5);;
+}
+
 a {
     font-weight: 500;
     color: #3072ff;
