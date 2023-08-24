@@ -8,7 +8,7 @@ function App() {
         <div class="navbar-left">
             <div class="p-5 flex flex-col gap-2">
                 <NoteSearch />
-                <button class="folder-header w-full"><FaSolidFolderPlus fill="#fff" />Create Folder</button>
+                <button class="button button-default w-full"><FaSolidFolderPlus fill="#fff" />Create Folder</button>
             </div>
             <div class="folders">
                 <Folder title="Mathematics" />
