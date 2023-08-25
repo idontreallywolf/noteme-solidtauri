@@ -4,6 +4,11 @@
 
 @layer components {
     body { @apply bg-[#27374D] }
+    
+    .main-container {
+        @apply h-screen w-screen flex flex-row
+    }
+
     .navbar-left {
         @apply flex flex-col w-64 h-screen bg-[#223044]
     }
