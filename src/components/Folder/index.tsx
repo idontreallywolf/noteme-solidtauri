@@ -1,9 +1,10 @@
 import { FaSolidFolder } from 'solid-icons/fa'
 import NoteFile from '../NoteFile';
 import { createSignal } from 'solid-js';
+import type { IFolder } from '../../store';
 
 interface FolderProps {
-    title: string
+    data: IFolder
 }
 
 function Folder(props: FolderProps) {
@@ -12,18 +13,19 @@ function Folder(props: FolderProps) {
     return (
         <div class="folder">
             <div class="folder-header" onClick={() => setCollapsed(!isCollapsed())}>
-                <span><FaSolidFolder fill='#fff'/></span>
-                <span class="">{ props.title }</span>
+                <span><FaSolidFolder fill={props.data.color} /></span>
+                <span class="">{props.data.title}</span>
             </div>
             { 
                 !isCollapsed() && <>
                 <div class="folder-pole"></div>
                 <div class="files">
-                    <NoteFile title="math" />
-                    <NoteFile title="math" />
-                    <NoteFile title="math" />
-                    <NoteFile title="math" />
-                    <NoteFile title="math" />
+                    { props.data.notes &&
+                        Object.entries(props.data.notes).map(note => {
+                            const noteData = note[1]
+                            return <NoteFile data={noteData!} />
+                        })
+                    }
                 </div>
                 </>
             }

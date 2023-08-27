@@ -21,7 +21,7 @@ function Modal(props: ModalProps): JSX.Element {
 
     return (
         <div class="absolute z-50 top-0 left-0 right-0 bottom-0 bg-slate-800 bg-opacity-50 flex h-screen">
-            <div class="rounded-md shadow-lg bg-white m-auto w-1/5">
+            <div class="rounded-md shadow-lg bg-white m-auto sm:w-10/12 md:w-[500px]">
                 <Header booleanState={props.booleanState} closeModal={props.handleClose}>
                     {props.header}
                 </Header>

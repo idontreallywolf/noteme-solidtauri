@@ -20,7 +20,7 @@ function Header(props: HeaderProps) {
                             class="button"
                             type="button"
                         >
-                            <VsClose fill="#fff" />
+                            <VsClose fill="#000" />
                         </button>
                     </div>
                 )}

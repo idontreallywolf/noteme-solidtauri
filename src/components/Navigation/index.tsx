@@ -1,23 +1,21 @@
+import { JSX } from 'solid-js'
 import NoteSearch from "../NoteSearch";
 import Logo from "../Logo";
-import Folder from "../Folder";
-import { FaSolidFolderPlus } from 'solid-icons/fa'
+
+import CreaterFolderButton from './partials/CreateFolderButton';
+import FolderTree from './partials/FolderTree';
 
 interface NavigationProps {}
 
-function Navigation(props: NavigationProps) {
+function Navigation(props: NavigationProps): JSX.Element {
     return (
         <div class="navbar-left">
             <Logo />
             <div class="p-5 flex flex-col gap-2">
                 <NoteSearch />
-                <button class="button button-default w-full">
-                    <FaSolidFolderPlus fill="#fff" />Create Folder
-                </button>
+                <CreaterFolderButton />
             </div>
-            <div class="folders">
-                <Folder title="Mathematics" />
-            </div>
+            <FolderTree />
         </div>
     );
 }
