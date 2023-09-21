@@ -1,5 +1,5 @@
-import { IFolder, useStore } from "../../../../store"
-import Folder from "../../../Folder"
+import { IFolder, useStore } from "../../store"
+import Folder from "../Folder"
 
 function FolderTree(props: any) {
     const store: any = useStore()
@@ -9,7 +9,7 @@ function FolderTree(props: any) {
             { (Object.keys(store.folders).length > 0 &&
                 Object.entries(store.folders).map((folder) => {
                     console.log('folder...')
-                    return <Folder data={folder[1] as IFolder} />
+                    return <Folder id={(folder[1] as IFolder).folderId} />
                 }))
                 ||
                 <span class="text-white">No folders found</span>

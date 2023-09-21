@@ -9,8 +9,10 @@ import {
 
 interface storeState {
     activeNote: ActiveNote | null
+    viewFolderSettings: boolean
     folders: Folders | {}
     dispatcher: Dispatchers | {}
+    settingsFolderId: string | null
 }
 
 interface ActiveNote {
@@ -33,6 +35,7 @@ interface Folders {
 
 interface IFolder extends FileTreeItem {
     folderId: string
+    fileCount: number
     notes: Notes | undefined
 }
 
@@ -43,7 +46,7 @@ interface Notes {
 interface INote extends FileTreeItem {
     noteId: string
     folderId: string
-    data: string
+    data: string | null
 }
 
 const storeContext = createContext();
@@ -53,8 +56,18 @@ export default function StoreProvider(props: any) {
 
     const initialState: storeState = {
         activeNote: null,
+        settingsFolderId: null,
+        viewFolderSettings: false,
         folders: {},
         dispatcher: {
+            setSettingsFolderId(folderId: string | null): void {
+                setState("settingsFolderId", folderId)
+            },
+
+            setViewFolderSettings(shouldView: boolean): void {
+                setState("viewFolderSettings", shouldView)
+            },
+
             addFolder(
                 folderId: string,
                 title: string,
@@ -63,7 +76,13 @@ export default function StoreProvider(props: any) {
                 setState("folders", (folders: Folders) => {
                     console.log("folders", JSON.stringify(folders))
                     const tempFolders = { ...folders }
-                    tempFolders[folderId] = { folderId, title, color, notes: undefined }
+
+                    tempFolders[folderId] = {
+                        folderId, title, color,
+                        fileCount: 0 ,
+                        notes: undefined
+                    }
+
                     return tempFolders
                 })
             },
@@ -114,6 +133,24 @@ export default function StoreProvider(props: any) {
                     }
 
                     notes[noteId] = undefined
+                })
+            },
+
+            updateFolderTitle(folderId: string, title: string): void {
+                setState("folders", (folders: Folders) => {
+                    const tempFolders: Folders = { ...folders }
+
+                    if (tempFolders[folderId] === undefined) {
+                        return tempFolders
+                    }
+
+                    let tempFolder = { ...tempFolders[folderId] } as IFolder
+                    tempFolder.title = title
+
+                    // Error occurs here.
+                    tempFolders[folderId] = tempFolder
+
+                    return tempFolders
                 })
             }
         }

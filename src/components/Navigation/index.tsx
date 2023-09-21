@@ -3,7 +3,7 @@ import NoteSearch from "../NoteSearch";
 import Logo from "../Logo";
 
 import CreaterFolderButton from './partials/CreateFolderButton';
-import FolderTree from './partials/FolderTree';
+import FolderTree from '../FolderTree';
 
 interface NavigationProps {}
 

@@ -1,5 +1,5 @@
 import { FaSolidFolderOpen } from 'solid-icons/fa'
-import { useStore } from '../../store'
+import { useStore } from '../../../../store'
 import { v4 as uuidv4 } from 'uuid'
 
 function CreateFolderWindow(props: any) {
@@ -13,6 +13,7 @@ function CreateFolderWindow(props: any) {
         const newFolderColor = 'yellow'
 
         store.dispatcher.addFolder(newFolderId, newFolderName, newFolderColor)
+        props.closeHandle()
     }
 
     return (
@@ -38,7 +39,7 @@ function CreateFolderWindow(props: any) {
                 </div>
                 <div class="flex flex-row justify-between gap-2">
                     <button class="button button-default w-full" onClick={handleCreateFolder}>Create Folder</button>
-                    <button class="button button-default w-full">Cancel</button>
+                    <button class="button button-default w-full" onClick={props.closeHandle}>Cancel</button>
                 </div>
             </div>
         </div>
