@@ -13,7 +13,7 @@ function FolderTitle(props: FolderTitleProps): JSX.Element {
         setTitle(store.folders[props.folderId].title)
     })
 
-    return <div class="truncate w-full">{title()}</div>
+    return <div class="truncate w-full select-none">{title()}</div>
 }
 
 export default FolderTitle
