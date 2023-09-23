@@ -10,9 +10,11 @@ import {
 interface storeState {
     activeNote: ActiveNote | null
     viewFolderSettings: boolean
+    viewNewFileModalWindow: boolean
     folders: Folders | {}
     dispatcher: Dispatchers | {}
     settingsFolderId: string | null
+    selectedFolderId: string | null
 }
 
 interface ActiveNote {
@@ -56,16 +58,26 @@ export default function StoreProvider(props: any) {
 
     const initialState: storeState = {
         activeNote: null,
+        selectedFolderId: null,
         settingsFolderId: null,
         viewFolderSettings: false,
+        viewNewFileModalWindow: false,
         folders: {},
         dispatcher: {
             setSettingsFolderId(folderId: string | null): void {
                 setState("settingsFolderId", folderId)
             },
 
+            setSelectedFolderId(folderId: string | null): void {
+                setState("selectedFolderId", folderId)
+            },
+
             setViewFolderSettings(shouldView: boolean): void {
                 setState("viewFolderSettings", shouldView)
+            },
+
+            setViewNewFileModalWindow(shouldView: boolean): void {
+                setState("viewNewFileModalWindow", shouldView)
             },
 
             addFolder(
@@ -107,8 +119,15 @@ export default function StoreProvider(props: any) {
                 color: string
             ): void {
                 setState("folders", (folders: Folders) => {
+                    console.log('adding note to', folderId)
                     const tempFolders = { ...folders }
-                    let notes = tempFolders[folderId]?.notes ?? {}
+
+                    const folder = { ...tempFolders[folderId] } as IFolder
+                    if (!folder) {
+                        return tempFolders
+                    }
+
+                    let notes = { ...folder.notes } ?? {}
 
                     notes[noteId] = {
                         folderId,
@@ -118,7 +137,9 @@ export default function StoreProvider(props: any) {
                         data
                     }
 
-                    tempFolders[folderId]!['notes'] = notes
+                    folder.notes = notes
+                    tempFolders[folder.folderId] = folder
+
                     return tempFolders
                 })
             },

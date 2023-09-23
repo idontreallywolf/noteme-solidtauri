@@ -5,6 +5,7 @@ import FolderIcon from './FolderIcon'
 import FolderTitle from './FolderTitle'
 import FileCount from './FileCount'
 import FolderSettingsButton from './FolderSettingsButton'
+import FolderNewFileButton from './FolderNewFileButton'
 
 interface FolderHeaderProps {
     folderData: IFolder
@@ -23,6 +24,15 @@ function FolderHeader(props: FolderHeaderProps): JSX.Element {
         event.stopPropagation()
     }
 
+    const onNewFileButtonClick = (event) => {
+        batch(() => {
+            console.log('selecting folder ', props.folderData.folderId)
+            store.dispatcher.setSelectedFolderId(props.folderData.folderId)
+            store.dispatcher.setViewNewFileModalWindow(true)
+        })
+        event.stopPropagation()
+    }
+
     return (
         <div class="flex flex-col gap-1">
             <div class="folder-header group justify-between"
@@ -37,6 +47,10 @@ function FolderHeader(props: FolderHeaderProps): JSX.Element {
                     <FileCount
                         fileCount={props.folderData.fileCount}
                         isHovered={isHovered()}
+                    />
+                    <FolderNewFileButton
+                        onClick={onNewFileButtonClick}
+                        shouldShow={isHovered()}
                     />
                     <FolderSettingsButton
                         onClick={onSettingsButtonClick}
