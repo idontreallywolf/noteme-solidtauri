@@ -18,17 +18,16 @@ function FolderHeader(props: FolderHeaderProps): JSX.Element {
 
     const onSettingsButtonClick = (event) => {
         batch(() => {
-            store.dispatcher.setViewFolderSettings(true)
             store.dispatcher.setSettingsFolderId(props.folderData.folderId)
+            store.modals.dispatch.toggleFolderSettingsModal()
         })
         event.stopPropagation()
     }
 
     const onNewFileButtonClick = (event) => {
         batch(() => {
-            console.log('selecting folder ', props.folderData.folderId)
             store.dispatcher.setSelectedFolderId(props.folderData.folderId)
-            store.dispatcher.setViewNewFileModalWindow(true)
+            store.modals.dispatch.toggleNewFileModal()
         })
         event.stopPropagation()
     }

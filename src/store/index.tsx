@@ -6,15 +6,16 @@ import {
 import {
     createStore
 } from 'solid-js/store';
+import createModalStore, { ModalStoreState } from './modalStore';
 
 interface storeState {
     activeNote: ActiveNote | null
-    viewFolderSettings: boolean
-    viewNewFileModalWindow: boolean
+
     folders: Folders | {}
     dispatcher: Dispatchers | {}
     settingsFolderId: string | null
     selectedFolderId: string | null
+    modals: ModalStoreState
 }
 
 interface ActiveNote {
@@ -57,12 +58,14 @@ export default function StoreProvider(props: any) {
     const [state, setState]: any = createStore({})
 
     const initialState: storeState = {
+        modals: createModalStore(state, setState),
+
         activeNote: null,
         selectedFolderId: null,
         settingsFolderId: null,
-        viewFolderSettings: false,
-        viewNewFileModalWindow: false,
+
         folders: {},
+
         dispatcher: {
             setSettingsFolderId(folderId: string | null): void {
                 setState("settingsFolderId", folderId)
@@ -72,23 +75,13 @@ export default function StoreProvider(props: any) {
                 setState("selectedFolderId", folderId)
             },
 
-            setViewFolderSettings(shouldView: boolean): void {
-                setState("viewFolderSettings", shouldView)
-            },
-
-            setViewNewFileModalWindow(shouldView: boolean): void {
-                setState("viewNewFileModalWindow", shouldView)
-            },
-
             addFolder(
                 folderId: string,
                 title: string,
                 color: string
             ): void {
                 setState("folders", (folders: Folders) => {
-                    console.log("folders", JSON.stringify(folders))
                     const tempFolders = { ...folders }
-
                     tempFolders[folderId] = {
                         folderId, title, color,
                         fileCount: 0 ,
@@ -103,6 +96,7 @@ export default function StoreProvider(props: any) {
                 setState("folders", (folders: Folders) => {
                     const tempFolders = { ...folders }
                     tempFolders[folderId] = undefined
+
                     return tempFolders
                 })
             },
@@ -119,7 +113,6 @@ export default function StoreProvider(props: any) {
                 color: string
             ): void {
                 setState("folders", (folders: Folders) => {
-                    console.log('adding note to', folderId)
                     const tempFolders = { ...folders }
 
                     const folder = { ...tempFolders[folderId] } as IFolder
@@ -128,7 +121,6 @@ export default function StoreProvider(props: any) {
                     }
 
                     let notes = { ...folder.notes } ?? {}
-
                     notes[noteId] = {
                         folderId,
                         noteId,
@@ -147,8 +139,8 @@ export default function StoreProvider(props: any) {
             deleteNote(folderId: string, noteId: string) {
                 setState("folders", (folders: Folders) => {
                     const tempFolders = { ...folders }
-                    let notes = tempFolders[folderId]?.notes
 
+                    let notes = tempFolders[folderId]?.notes
                     if (notes === undefined) {
                         return
                     }
@@ -160,7 +152,6 @@ export default function StoreProvider(props: any) {
             updateFolderTitle(folderId: string, title: string): void {
                 setState("folders", (folders: Folders) => {
                     const tempFolders: Folders = { ...folders }
-
                     if (tempFolders[folderId] === undefined) {
                         return tempFolders
                     }
@@ -168,9 +159,7 @@ export default function StoreProvider(props: any) {
                     let tempFolder = { ...tempFolders[folderId] } as IFolder
                     tempFolder.title = title
 
-                    // Error occurs here.
                     tempFolders[folderId] = tempFolder
-
                     return tempFolders
                 })
             }

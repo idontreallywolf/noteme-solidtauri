@@ -1,21 +1,15 @@
-import { JSX, createEffect, createSignal } from 'solid-js'
-import { useStore } from '../../store'
+import { JSX, createEffect, createSignal, Show } from 'solid-js'
 import { FaSolidFolderOpen } from 'solid-icons/fa'
+import { useStore } from '../../store'
 
-function FolderSettingsWindow(props: any): JSX.Element {
+function FolderSettingsModal(props): JSX.Element {
     const store: any = useStore()
-    const [isVisible, setVisiblity] = createSignal(false)
     const [currentFolderName, setCurrentFolderName] = createSignal('')
 
     let folderNameInputRef: HTMLInputElement | undefined = undefined
 
     createEffect(() => {
-        setVisiblity(store.viewFolderSettings)
-        if (!store.viewFolderSettings) {
-            return
-        }
-
-        setCurrentFolderName(store.folders[store.settingsFolderId].title)
+        //setCurrentFolderName(store.folders[store.settingsFolderId].title)
         if (folderNameInputRef && store.settingsFolderId) {
             folderNameInputRef.value = store.folders[store.settingsFolderId].title || 'no name'
         }
@@ -27,15 +21,12 @@ function FolderSettingsWindow(props: any): JSX.Element {
 
     const onSaveButtonClick = () => {
         if (folderNameInputRef === undefined) {
-            console.log('ref undefined')
             hideThisWindow()
             return
         }
 
         const folderNameHasBeenModified = currentFolderName() !== folderNameInputRef.value
-
         if (folderNameHasBeenModified) {
-            console.log('ref modified')
             store.dispatcher.updateFolderTitle(
                 store.settingsFolderId,
                 folderNameInputRef.value
@@ -43,14 +34,13 @@ function FolderSettingsWindow(props: any): JSX.Element {
             folderNameInputRef.value = ''
         }
 
-        console.log('ref not modified')
         hideThisWindow()
     }
 
-    const hideThisWindow = () => store.dispatcher.setViewFolderSettings(false)
+    const hideThisWindow = () => store.modals.dispatch.toggleFolderSettingsModal()
 
     return (
-        <div class={`${isVisible() ? 'visible':'hidden'} absolute z-50 top-0 bottom-0 left-0 right-0 flex justify-center bg-[#27374d9a]`}>
+        <Show when={store.modals.viewFolderSettingsModal}>
             <div class="relative flex flex-col gap-5 mx-auto mt-24 h-fit bg-[#223044] p-5 shadow-xl sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 md:w-[600px]">
                 <div class="m-auto max-w-md flex flex-col gap-5">
                     <div class="flex flex-col gap-8 items-center">
@@ -74,8 +64,8 @@ function FolderSettingsWindow(props: any): JSX.Element {
                     <button class="button button-default w-full" onClick={onCloseButtonClick}>Cancel</button>
                 </div>
             </div>
-        </div>
+        </Show>
     )
 }
 
-export default FolderSettingsWindow
+export default FolderSettingsModal

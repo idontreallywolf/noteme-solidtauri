@@ -1,13 +1,13 @@
 import Navigation from "./components/Navigation";
 import NoteView from "./components/NoteView";
-import FolderSettingsWindow from "./components/FolderSettingsWindow";
 import CreateFileModal from "./components/CreateFileModal";
+import ModalContainer from "./components/Modals/ModalContainer";
 
 function App() {
     return (
         <div class="main-container">
             <CreateFileModal />
-            <FolderSettingsWindow />
+            <ModalContainer />
             <Navigation />
             <NoteView />
         </div>
