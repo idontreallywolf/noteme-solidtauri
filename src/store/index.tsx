@@ -139,13 +139,15 @@ export default function StoreProvider(props: any) {
             deleteNote(folderId: string, noteId: string) {
                 setState("folders", (folders: Folders) => {
                     const tempFolders = { ...folders }
+                    const folder = { ...tempFolders[folderId] } as IFolder
 
-                    let notes = tempFolders[folderId]?.notes
-                    if (notes === undefined) {
-                        return
-                    }
-
+                    let notes = { ...folder.notes }
                     notes[noteId] = undefined
+
+                    folder.notes = notes
+                    tempFolders[folderId] = folder
+
+                    return tempFolders
                 })
             },
 

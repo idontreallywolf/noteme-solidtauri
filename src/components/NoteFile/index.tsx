@@ -1,7 +1,7 @@
 import { FaSolidFile } from 'solid-icons/fa'
-import { Note } from '../../store'
+import { Note, useStore } from '../../store'
 
-import { createSignal, createEffect } from 'solid-js'
+import { createSignal } from 'solid-js'
 import FileEditButton from './FileEditButton'
 import FileDeleteButton from './FileDeleteButton'
 
@@ -10,12 +10,8 @@ interface NoteFileProps {
 }
 
 function NoteFile(props: NoteFileProps) {
-    const [noteId, setNoteId] = createSignal(props.data.noteId)
+    const store: any = useStore()
     const [isHovered, setHovered] = createSignal(false)
-
-    createEffect(() => {
-        setNoteId(props.data.noteId)
-    })
 
     const handleNoteNavigation = () => {
         console.log('navigating to note: ' + props.data.noteId)
@@ -27,7 +23,7 @@ function NoteFile(props: NoteFileProps) {
     }
 
     const onDeleteButtonClick = (clickEvent) => {
-        console.log('delete button clicked')
+        store.dispatcher.deleteNote(props.data.folderId, props.data.noteId)
         clickEvent.stopPropagation()
     }
 
@@ -37,7 +33,6 @@ function NoteFile(props: NoteFileProps) {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-
             <span><FaSolidFile fill={props.data.color}/></span>
             <div class="truncate select-none w-full">{props.data.title}</div>
             <div class="flex flex-row gap-1">
