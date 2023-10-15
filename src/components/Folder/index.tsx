@@ -36,11 +36,15 @@ function Folder(props: FolderProps) {
             />
             <Show when={!isCollapsed()}>
                 <div class="folder-pole"></div>
-                <Show when={folderNotes()}>
+                <Show when={store.folders[props.id].notes}>
                     <div class="files">
                         {
                             Object.entries(folderNotes()).map(note => {
                                 const noteData = note[1]
+                                if (note[1] === undefined) {
+                                    return null
+                                }
+
                                 return <NoteFile data={noteData!} />
                             })
                         }
