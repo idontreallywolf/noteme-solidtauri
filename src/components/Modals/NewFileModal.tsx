@@ -25,6 +25,8 @@ function NewFileModal(props): JSX.Element {
             return
         }
 
+        setError(null)
+
         batch(() => {
             store.dispatcher.addNote(
                 folderId,
