@@ -10,7 +10,7 @@ function NewFileModal(props): JSX.Element {
     let newFileNameInput: HTMLInputElement | undefined = undefined;
 
     const onCancel = () => {
-        store.models.dispatch.toggleNewFileModal()
+        store.modals.dispatch.toggleNewFileModal()
         newFileNameInput!.value = ''
     }
 
