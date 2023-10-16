@@ -39,7 +39,6 @@ function FolderHeader(props: FolderHeaderProps): JSX.Element {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
             >
- 
                 <FolderIcon color={props.folderData.color} />
                 <FolderTitle folderId={props.folderData.folderId} />
                 <div class="flex flex-row gap-1">
