@@ -15,6 +15,7 @@ interface storeState {
     dispatcher: Dispatchers | {}
     settingsFolderId: string | null
     selectedFolderId: string | null
+    selectedFile: INote | null
     modals: ModalStoreState
 }
 
@@ -64,6 +65,8 @@ export default function StoreProvider(props: any) {
         selectedFolderId: null,
         settingsFolderId: null,
 
+        selectedFile: null,
+
         folders: {},
 
         dispatcher: {
@@ -73,6 +76,10 @@ export default function StoreProvider(props: any) {
 
             setSelectedFolderId(folderId: string | null): void {
                 setState("selectedFolderId", folderId)
+            },
+
+            setSelectedFile(file: INote | null): void {
+                setState("selectedFile", file)
             },
 
             addFolder(
@@ -152,6 +159,24 @@ export default function StoreProvider(props: any) {
                 })
             },
 
+            setNoteName(folderId: string, noteId: string, newNoteName: string): void {
+                setState("folders", (folders: Folders) => {
+                    const tempFolders = { ...folders }
+                    const folder = { ...tempFolders[folderId] } as IFolder
+
+                    let notes = { ...folder.notes } as Notes
+                    let note = { ...notes[noteId] } as INote
+
+                    note.title = newNoteName
+                    notes[noteId] = note
+
+                    folder.notes = notes
+                    tempFolders[folderId] = folder
+
+                    return tempFolders
+                })
+            },
+
             updateFolderTitle(folderId: string, title: string): void {
                 setState("folders", (folders: Folders) => {
                     const tempFolders: Folders = { ...folders }
@@ -180,7 +205,7 @@ export default function StoreProvider(props: any) {
 
 export const useStore = () => useContext(storeContext);
 
-export type { IFolder, INote }
+export type { IFolder, INote, Notes }
 
 /*
 {

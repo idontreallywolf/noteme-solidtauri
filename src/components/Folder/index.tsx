@@ -1,6 +1,6 @@
 import NoteFile from '../NoteFile';
-import { createSignal, createEffect, Show } from 'solid-js';
-import { IFolder, Notes, useStore } from '../../store';
+import { createSignal, createEffect, Show, For } from 'solid-js';
+import { IFolder, INote, Notes, useStore } from '../../store';
 import FolderHeader from './FolderHeader';
 
 interface FolderProps {

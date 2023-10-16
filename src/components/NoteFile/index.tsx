@@ -1,29 +1,39 @@
 import { FaSolidFile } from 'solid-icons/fa'
-import { Note, useStore } from '../../store'
+import { INote, useStore } from '../../store'
 
-import { createSignal } from 'solid-js'
+import { createSignal, createEffect, batch } from 'solid-js'
 import FileEditButton from './FileEditButton'
 import FileDeleteButton from './FileDeleteButton'
 
 interface NoteFileProps {
-    data: Note
+    data: INote
 }
 
 function NoteFile(props: NoteFileProps) {
     const store: any = useStore()
     const [isHovered, setHovered] = createSignal(false)
+    const [file, setFile] = createSignal<INote | null>(null)
+
+    createEffect(() => {
+        const folder = store.folders[props.data.folderId]
+        const file = folder.notes[props.data.noteId]
+        setFile(file)
+    })
 
     const handleNoteNavigation = () => {
-        console.log('navigating to note: ' + props.data.noteId)
+        console.log('navigating to note: ' + file()!.noteId)
     }
 
     const onEditButtonClick = (clickEvent) => {
-        console.log('edit button clicked')
+        batch(() => {
+            store.dispatcher.setSelectedFile(file()!)
+            store.modals.dispatch.toggleEditFileModal()
+        })
         clickEvent.stopPropagation()
     }
 
     const onDeleteButtonClick = (clickEvent) => {
-        store.dispatcher.deleteNote(props.data.folderId, props.data.noteId)
+        store.dispatcher.deleteNote(file()!.folderId, file()!.noteId)
         clickEvent.stopPropagation()
     }
 
@@ -34,7 +44,7 @@ function NoteFile(props: NoteFileProps) {
             onMouseLeave={() => setHovered(false)}
         >
             <span><FaSolidFile fill={props.data.color}/></span>
-            <div class="truncate select-none w-full">{props.data.title}</div>
+            <div class="truncate select-none w-full">{file()?.title}</div>
             <div class="flex flex-row gap-1">
                 <FileEditButton
                     onClick={onEditButtonClick}

@@ -4,6 +4,7 @@ interface ModalStoreState {
     viewModalContainer: boolean
     viewFolderSettingsModal: boolean
     viewNewFileModal: boolean
+    viewEditFileModal: boolean
 
     dispatch: Dispatch | {}
 }
@@ -17,6 +18,7 @@ function createModalStore(state: any, setState: any): ModalStoreState {
         viewModalContainer: false,
         viewFolderSettingsModal: false,
         viewNewFileModal: false,
+        viewEditFileModal: false,
 
         dispatch: {
             toggleModalContainer(): void {
@@ -29,6 +31,10 @@ function createModalStore(state: any, setState: any): ModalStoreState {
 
             toggleNewFileModal(): void {
                 toggleModal("viewNewFileModal", setState)
+            },
+
+            toggleEditFileModal(): void {
+                toggleModal("viewEditFileModal", setState)
             }
         }
     }
