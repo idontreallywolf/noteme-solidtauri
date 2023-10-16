@@ -129,6 +129,7 @@ export default function StoreProvider(props: any) {
                         data
                     }
 
+                    folder.fileCount++
                     folder.notes = notes
                     tempFolders[folder.folderId] = folder
 
