@@ -1,4 +1,5 @@
 import {
+    createEffect,
     createSignal,
     onMount,
     Show
@@ -17,8 +18,15 @@ function Editor(props: any) {
     const [editor, setEditor] = createSignal<SolidEditorJS | null>(null);
     const [isReady, setIsReady] = createSignal<Boolean>(false);
     const [isEditMode, setIsEditMode] = createSignal<Boolean>();
+    const [editorData, setEditorData] = createSignal<string>(props.data);
 
     const holderId = props.holderId ?? uuidv4();
+
+    createEffect(() => {
+        if (isReady() && props.data !== undefined) {
+            editor()?.render(props.data)
+        }
+    })
 
     onMount(async () => {
         setEditor(new SolidEditorJS({

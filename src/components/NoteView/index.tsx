@@ -22,7 +22,7 @@ function NoteView(props: NoteViewProps) {
                 <div class="p-5">
                     <h1 class="text-white">File: { noteTitle() }</h1>
                 </div>
-                <Editor  />
+                <Editor data={store.activeNote.data} />
             </div>
         </Show>
     );

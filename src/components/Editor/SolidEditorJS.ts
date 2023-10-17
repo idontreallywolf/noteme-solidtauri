@@ -82,6 +82,10 @@ class SolidEditorJS {
     async clear() {
         this.instance.clear();
     }
+
+    async render(data: string) {
+        this.instance.render(JSON.parse(data));
+    }
 }
 
 export default SolidEditorJS;
