@@ -3,6 +3,19 @@ import { useStore } from '../../store'
 import Input from '../Input'
 import { v4 as uuidv4 } from 'uuid'
 
+const defaultEditorData = {
+    time: 1697557015470,
+    blocks: [
+        {
+            id: "mhTl6ghSkV",
+            type: "paragraph",
+            data: {
+                text: "Write something ...",
+            }
+        }
+    ]
+}
+
 function NewFileModal(props): JSX.Element {
     const store: any = useStore()
     const [error, setError] = createSignal<null | string>(null)
@@ -31,7 +44,7 @@ function NewFileModal(props): JSX.Element {
             store.dispatcher.addNote(
                 folderId,
                 fileId,
-                'sample data',
+                JSON.stringify(defaultEditorData),
                 fileName,
                 fileIconColor
             )
