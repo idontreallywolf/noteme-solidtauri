@@ -9,19 +9,15 @@ import {
 import createModalStore, { ModalStoreState } from './modalStore';
 
 interface storeState {
-    activeNote: ActiveNote | null
-
     folders: Folders | {}
     dispatcher: Dispatchers | {}
     settingsFolderId: string | null
     selectedFolderId: string | null
     selectedFile: INote | null
-    modals: ModalStoreState
-}
 
-interface ActiveNote {
-    folderId: string
-    noteId: string
+    activeNote: INote | null
+
+    modals: ModalStoreState
 }
 
 interface Dispatchers {
@@ -82,6 +78,10 @@ export default function StoreProvider(props: any) {
                 setState("selectedFile", file)
             },
 
+            setActiveNote(file: INote | null): void {
+                setState("activeNote", file)
+            },
+
             addFolder(
                 folderId: string,
                 title: string,
@@ -106,10 +106,6 @@ export default function StoreProvider(props: any) {
 
                     return tempFolders
                 })
-            },
-
-            setActiveNote(folderId: string, noteId: string): void {
-                setState("activeNote", { folderId, noteId })
             },
 
             addNote(

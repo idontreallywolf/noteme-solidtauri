@@ -15,13 +15,11 @@ function NoteFile(props: NoteFileProps) {
     const [file, setFile] = createSignal<INote | null>(null)
 
     createEffect(() => {
-        const folder = store.folders[props.data.folderId]
-        const file = folder.notes[props.data.noteId]
-        setFile(file)
+        setFile(props.data)
     })
 
     const handleNoteNavigation = () => {
-        console.log('navigating to note: ' + file()!.noteId)
+        store.dispatcher.setActiveNote(props.data)
     }
 
     const onEditButtonClick = (clickEvent) => {
