@@ -17,7 +17,7 @@ function NoteView(props: NoteViewProps) {
     })
 
     return (
-        <Show when={store.activeNote} fallback={'Select a note.'}>
+        <Show when={store.activeNote} fallback={<span class="text-slate-50 p-8 text-2xl">Select a note.</span>}>
             <div class="p-5 flex flex-col w-full">
                 <div class="p-5">
                     <h1 class="text-white">File: { noteTitle() }</h1>
